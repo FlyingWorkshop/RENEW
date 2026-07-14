@@ -1,0 +1,21 @@
+# Experiment outputs (checkpoints, npz curves, generated plots)
+out/
+saved_networks/
+dynamics_models/
+wandb/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

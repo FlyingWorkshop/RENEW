@@ -1,0 +1,16 @@
+# Exact versions used to produce the paper results (Python 3.11).
+# For GPU, install a matching jax/jaxlib CUDA build instead of the CPU wheels
+# (see https://github.com/jax-ml/jax#installation).
+jumanji==1.1.1
+gymnax==0.0.9
+jax==0.9.0.1
+jaxlib==0.9.0.1
+flax==0.12.4
+optax==0.2.6
+chex==0.1.91
+tyro==1.0.7
+numpy==2.3.5
+scipy==1.17.1
+matplotlib==3.10.8
+imageio==2.37.2
+pillow==12.1.1
