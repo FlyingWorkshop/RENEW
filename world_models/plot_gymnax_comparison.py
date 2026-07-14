@@ -64,7 +64,7 @@ def _plot_method(ax, results_list, color, label):
         arr = np.array(aligned)
         n = len(aligned)
         mean = arr.mean(0)
-        ax.plot(ref_labels, mean, linewidth=1.5, color=color, label=label)
+        ax.plot(ref_labels, mean, linewidth=0.75, color=color, label=label)
         if n > 1:
             ci = 1.96 * arr.std(0, ddof=1) / np.sqrt(n)
             ax.fill_between(ref_labels, mean - ci, mean + ci,
@@ -87,13 +87,21 @@ LABELS = {
     "renew": "RENEW",
 }
 
+# ── Paper geometry (RLC / rlj.sty) ───────────────────────────────────
+# Author at the exact print width so in-figure point sizes map 1:1 to the PDF.
+# rlj.sty sets \textwidth = 5.5in; the paper includes this at width=0.9\textwidth.
+FIG_WIDTH_IN = 0.9 * 5.5           # = 4.95 in
+_SERIF_STACK = ["Times New Roman", "Nimbus Roman", "Liberation Serif",
+                "Tinos", "DejaVu Serif"]
+FS = {"title": 9.0, "axlabel": 8.5, "tick": 7.0, "legend": 8.0, "row": 8.0}
+
 
 def main(args: PlotArgs):
     # ── Global rc overrides (kept local to avoid side-effects) ───────
     plt.rcParams.update({
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
-        "mathtext.fontset": "dejavusans",
+        "font.family": "serif",
+        "font.serif": _SERIF_STACK,
+        "mathtext.fontset": "stix",   # Times-like math (bundled with mpl)
         "axes.linewidth": 0.6,
         "xtick.major.width": 0.6,
         "ytick.major.width": 0.6,
@@ -109,7 +117,7 @@ def main(args: PlotArgs):
     ]
 
     fig, axes = plt.subplots(
-        2, 2, figsize=(5.5, 3.6), dpi=300,
+        2, 2, figsize=(FIG_WIDTH_IN, 3.5), dpi=400,
         gridspec_kw={"hspace": 0.12, "wspace": 0.08},
     )
 
@@ -124,14 +132,14 @@ def main(args: PlotArgs):
                              COLORS[method], LABELS[method])
 
             # ── Tick formatting ──────────────────────────────────────
-            ax.tick_params(labelsize=7, pad=2)
+            ax.tick_params(labelsize=FS["tick"], pad=2)
             ax.xaxis.set_major_formatter(
                 mticker.FuncFormatter(lambda x, _: f"{int(x/1000)}k"
                                       if x > 0 else "0"))
 
             # Column titles (top row only)
             if row == 0:
-                ax.set_title(f"$K = {K}$", fontsize=9, pad=4)
+                ax.set_title(f"$K = {K}$", fontsize=FS["title"], pad=4)
 
             # Hide right-column y tick labels (shared y-axis)
             if col > 0:
@@ -169,29 +177,33 @@ def main(args: PlotArgs):
         ax.annotate(
             ENV_NAMES.get(env, env),
             xy=(1.0, 0.5), xycoords="axes fraction",
-            xytext=(8, 0), textcoords="offset points",
-            fontsize=8, fontstyle="italic",
+            xytext=(7, 0), textcoords="offset points",
+            fontsize=FS["row"], fontstyle="italic",
             ha="left", va="center", rotation=-90,
         )
 
     # ── Shared axis labels ───────────────────────────────────────────
-    fig.text(0.02, 0.5, "Val MSE", va="center", rotation="vertical",
-             fontsize=9)
-    fig.text(0.5, 0.04, "Preference Labels", ha="center", fontsize=9)
+    fig.text(0.025, 0.55, "Val MSE", va="center", rotation="vertical",
+             fontsize=FS["axlabel"])
+    fig.text(0.5, 0.085, "Preference Labels", ha="center",
+             fontsize=FS["axlabel"])
 
     # ── Shared legend ────────────────────────────────────────────────
     handles, labels = axes[0][0].get_legend_handles_labels()
     fig.legend(
         handles, labels,
-        loc="lower center", ncol=2, fontsize=8,
-        frameon=False, columnspacing=1.5,
-        bbox_to_anchor=(0.5, -0.04),
+        loc="lower center", ncol=2, fontsize=FS["legend"],
+        frameon=False, columnspacing=1.5, handlelength=1.6,
+        bbox_to_anchor=(0.5, 0.005),
     )
 
-    fig.subplots_adjust(left=0.10, right=0.93, top=0.92, bottom=0.14)
+    fig.subplots_adjust(left=0.11, right=0.90, top=0.90, bottom=0.17)
 
     os.makedirs(os.path.dirname(args.output) or ".", exist_ok=True)
-    fig.savefig(args.output, bbox_inches="tight", pad_inches=0.05)
+    # Save at natural size ("standard", not "tight") so the saved width equals
+    # FIG_WIDTH_IN exactly and \includegraphics[width=0.9\textwidth] is scale 1.
+    with plt.rc_context({"savefig.bbox": "standard"}):
+        fig.savefig(args.output)
     plt.close(fig)
     print(f"\n  Saved -> {args.output}")
 
