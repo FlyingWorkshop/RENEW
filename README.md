@@ -140,15 +140,13 @@ python world_models/ablation_ties.py    # exclude vs. include tied preference pa
 If you use this code, please cite:
 
 ```bibtex
-@inproceedings{bhamidipaty2025renew,
+@inproceedings{bhamidipaty2026renew,
   title     = {{RENEW}: Towards Learning World Models and Repairing Model Exploitation from Preferences},
   author    = {Bhamidipaty, Logan and Kochenderfer, Mykel and Ramamoorthy, Subramanian},
-  booktitle = {Reinforcement Learning Conference (RLC) Workshop},
-  year      = {2025}
+  booktitle = {Finding the Frame Workshop at the Reinforcement Learning Conference (RLC)},
+  year      = {2026}
 }
 ```
-
-<!-- TODO: update the BibTeX with the final workshop name / URL once available. -->
 
 ## License
 
