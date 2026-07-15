@@ -8,7 +8,7 @@ Mykel Kochenderfer, and Subramanian Ramamoorthy.
 Bradley–Terry preference framework with the trajectory log-likelihood under a
 learned dynamics model, so binary preferences supervise world-model *dynamics*
 directly. **RENEW** makes this practical by directing preference queries toward
-high-uncertainty transitions — the ones most vulnerable to model exploitation.
+high-uncertainty transitions: the ones most vulnerable to model exploitation.
 
 ## Installation
 
