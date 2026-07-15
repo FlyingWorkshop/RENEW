@@ -138,11 +138,11 @@ class CompareArgs:
     # --- Pretraining ---
     pretrain: bool = True
     """If True, warm-start with supervised MSE pretraining."""
-    pretrain_steps: int = 500
+    pretrain_steps: int = 50
     """Number of supervised pretraining gradient steps."""
     pretrain_batch: int = 32
     """Batch size for pretraining."""
-    pretrain_dataset_size: int = 100
+    pretrain_dataset_size: int = 5
     """Number of random (s, a, s') transitions to collect for pretraining."""
     pretrain_checkpoint: Optional[str] = None
     """Path to directory with pretrained_0.pkl, ... to skip pretraining."""

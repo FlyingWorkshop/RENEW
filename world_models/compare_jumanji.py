@@ -102,14 +102,10 @@ class CompareArgs:
     seeds: List[int] = field(default_factory=lambda: [0, 1, 2, 3, 4])
     envs: List[str] = field(default_factory=lambda: [
         "sliding3",
-        "sliding5", 
+        "sliding5",
         "sokoban",
-        # "pacman", 
-        # "connector8_3",
         "maze5",
         "maze10",
-        # "maze15",
-        # "maze20",
     ])
 
     # --- Overwrite / rerun control ---
@@ -136,8 +132,7 @@ class CompareArgs:
     env_budgets: Dict[str, int] = field(default_factory=lambda: {
         "sliding3":     100_000,
         "sliding5":     100_000,
-        "sokoban":     100_000,
-        # "connector8_3": 50_000,
+        "sokoban":      100_000,
         "maze5":        100_000,
         "maze10":       100_000,
         "maze15":       100_000,

@@ -48,8 +48,6 @@ class PretrainArgs:
     seed: int = 0
 
     # --- Environment ---
-    env: str = "maze10"
-    """Environment name. e.g. maze10, cleaner10, sokoban10."""
     maze_size: int = 10
 
     # --- Pretraining ---

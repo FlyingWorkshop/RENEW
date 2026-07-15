@@ -75,18 +75,13 @@ OUT_DIR = os.path.join(os.path.dirname(__file__), "..", "out")
 @dataclass
 class FromScratchArgs:
     seeds: List[int] = field(default_factory=lambda: [0, 1, 2, 3, 4, 5])
-    """Seeds to run. 3 is enough for a sanity check."""
+    """Seeds to run."""
 
     envs: List[str] = field(default_factory=lambda: [
-        # "maze5", 
-        "maze10", 
-        # "maze15", 
-        # "maze20",
+        "maze10",
         "sliding5",
         "sokoban",
         "2048",
-        # "connector8_3",
-        # "pacman",
     ])
     """Environments to evaluate."""
 
